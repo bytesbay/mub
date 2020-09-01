@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
     
     - name: Checkout code
@@ -17,4 +18,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         image-name: mub # Provide only Docker image name
-        extract-git-tag: true # Provide flag to extract Docker image tag from git reference
+        image-tag: head
