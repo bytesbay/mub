@@ -15,6 +15,7 @@ const FileService = {
       },
       user: user_id,
       path: file.path,
+      tmp_name: file.filename,
     });
 
     return item;
