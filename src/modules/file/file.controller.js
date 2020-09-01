@@ -1,89 +1,51 @@
-import File from './file.model';
-import InvalidInputError from 'src/errors/invalid-input.error';
-import Axios from 'axios';
-import { Buffer } from 'buffer';
-import FS from 'fs';
-
 import Express from 'express';
-import AuthMiddleware from 'src/middleware/auth.middleware';
+import { authMiddleware } from 'src/middleware/auth.middleware';
+import { FileService } from './file.service';
 import Multer from 'multer';
 
 const router = new Express.Router();
 const upload = Multer({
-  dest: 'tmp/',
+  dest: '/data/mub/files',
   limits: {
-    fileSize: 50 * 1024 * 1024,
+    fileSize: process.env['MAX_FILESIZE'] || (50 * 1024 * 1024),
   }
 });
 
 // accept multipart/form-data
 router.post('/', [
-  AuthMiddleware.basic, 
+  authMiddleware, 
   upload.single('file'), 
-  function(req, res, next) {
-    const file = new File({
-      name: req.file.originalname,
-      meta: {
-        mimetype: req.file.mimetype,
-        encoding: req.file.encoding,
-        size: req.file.size
-      },
-      user: req.payload.user._id,
-      path: req.file.path,
-      tmp: req.file.filename
-    });
-
-    file
-      .save()
-      .then(item => {
-        console.log(item);
-        res.json({
-          id: file._id
-        });
-      })
-      .catch(next);
+  async function(req, res, next) {
+    FileService.create(req.user_id, req.file)
+      .then(data => res.json(data))
+      .catch(next)
   },
 ]);
 
-
 router.delete('/all', [
-  AuthMiddleware.basic, 
+  authMiddleware, 
   function(req, res, next) {
-    File.find({ user: req.payload.user._id })
-      .then(items => {
-        items = items.map(n => {
-          return n.remove();
-        });
-
-        Promise.all(items)
-          .then(() => {
-            res.end();
-          })
-          .catch(next);
-      })
-      .catch(next);
+    FileService.deleteAll(req.user_id)
+      .then(() => res.end())
+      .catch(next)
   }
 ]);
 
 router.delete('/:file', [
-  AuthMiddleware.basic, 
+  authMiddleware, 
   function(req, res, next) {
-    File.deleteOne({ _id: req.params.file })
-      .then(items => {
-        res.end();
-      })
-      .catch(next);
+    FileService.delete(req.params.file, req.user_id)
+      .then(() => res.end())
+      .catch(next)
   },
 ]);
 
 router.get('/', [
-  AuthMiddleware.basic, 
+  authMiddleware, 
   function(req, res, next) {
-    File.find({ user: req.payload.user._id })
-      .then(items => {
-        res.json(items);
-      })
-      .catch(next);
+    FileService.selectAll(req.user_id)
+      .then(data => res.json(data))
+      .catch(next)
   },
 ]);
 

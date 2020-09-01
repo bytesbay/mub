@@ -1,6 +1,5 @@
 node_modules/*
 .ftpconfig
 .DS_Store
-tmp/*
-.env
-persistent
+.persistent
+.docker

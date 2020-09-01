@@ -1,6 +1,6 @@
 import Chain from 'middleware-chain'
 
-import File from 'src/modules/file/file.model'
+import { File } from 'src/modules/file/file.model'
 
 const start = function () {
 

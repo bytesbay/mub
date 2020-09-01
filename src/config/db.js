@@ -1,11 +1,11 @@
 import LowDB from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
 
-const adapter = new FileSync('/data/db.json')
+const adapter = new FileSync('/data/mub/db.json')
 $config.db = LowDB(adapter)
 
 const connect = async function () {
-  $config.db.defaults({ files: [], auths: {}, count: 0 })
+  await $config.db.defaults({ files: [], auths: [] })
     .write()
 }
 

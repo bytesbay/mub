@@ -1,5 +1,7 @@
 const errorHandler = function(err, req, res, next) {
 
+  console.error(err);
+
   if(err.name == 'InvalidInputError') {
     res.status(err.code).send({
       err: err.errors

@@ -1,17 +1,20 @@
 {
-  "name": "file-uploader",
+  "name": "mub",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --es-module-specifier-resolution=node",
-    "alias": "link-module-alias"
+    "alias": "link-module-alias",
+    "test": "jest"
   },
+  "type": "module",
   "dependencies": {
     "axios": "^0.19.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "link-module-alias": "^1.2.0",
@@ -23,7 +26,17 @@
     "rimraf": "^2.7.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^26.3.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^26.4.2",
+    "nodemon": "^1.19.1",
+    "superagent": "^6.1.0",
+    "supertest": "^4.0.2"
   },
   "_moduleAliases": {
     "src": "src"

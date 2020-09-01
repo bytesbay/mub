@@ -1,5 +1,5 @@
 node_modules
 npm-debug.log
-tmp
-public/storage
 .git
+.persistent
+.docker

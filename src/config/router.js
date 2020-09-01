@@ -7,6 +7,7 @@ import { FileController } from 'src/modules/file/file.controller';
 router.get('/', (req, res) => res.json({
   name: 'MUB',
   author: 'Miroslaw Shpak @bytesbay',
+  link: 'https://github.com/bytesbay/mub'
 }))
 
 router.use('/file', FileController);
