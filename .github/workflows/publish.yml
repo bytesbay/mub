@@ -12,11 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1
+    - name: Build and Publish Tag Docker image
+      uses: VaultVulp/gp-docker-action@1.1.6
       with:
-        username: bytesbay
-        password: ${{ secrets.GITHUB_TOKEN }}
-        repository: ${{ github.repository }}
-        tag_with_ref: true
-        tag_with_sha: true
+        github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
+        image-name: mub # Provide only Docker image name
+        extract-git-tag: true # Provide flag to extract Docker image tag from git reference
