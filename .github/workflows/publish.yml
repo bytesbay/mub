@@ -19,3 +19,4 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         image-name: mub # Provide only Docker image name
         dockerfile: main.dockerfile
+        extract-git-tag: true
